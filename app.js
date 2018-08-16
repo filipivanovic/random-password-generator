@@ -179,10 +179,16 @@ $('#clear').on('click', function(){
 
 
 $('#generate').on('click', function(){
-	if(checkboxes.prop('checked') === false){
-		$('#output').text('Why would you do that?')
-	}else{
-		$('#output').empty().text(generate(passLen, neighbour, easier, a()));
+	let count = 0;
+	for(let i of checkboxes){
+		if($(i).prop('checked') === false) {
+			count++;
+			if(count === 4){
+				$('#output').text('Why would you do that?')
+			}else{
+				$('#output').empty().text(generate(passLen, neighbour, easier, a()));
+			}
+		}
 	}
 	
 });
