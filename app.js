@@ -97,22 +97,28 @@ function neighbourLetter(item){
 
 //put custom letters that will be wrapped with random chars
 function easierToRemember(item, itemToPut){
-	if(itemToPut != undefined){
-		itemToPut = Array.from(itemToPut);
-		item = getRand(item.length, item) // randomize
-		item = Array.from(item);
+	if(item.length > itemToPut.length){
+			if(itemToPut != undefined){
+			itemToPut = Array.from(itemToPut);
+			item = getRand(item.length, item) // randomize
+			item = Array.from(item);
 
-		let start = Math.floor((item.length - itemToPut.length) / 2);
-		let end = itemToPut.length;
-		item.splice(start, end, itemToPut);
-		for(let i in item){
-			if(item[i].constructor === Array){
-				item[i] = item[i].join('');
+			let start = Math.floor((item.length - itemToPut.length) / 2);
+			let end = itemToPut.length;
+			item.splice(start, end, itemToPut);
+			for(let i in item){
+				if(item[i].constructor === Array){
+					item[i] = item[i].join('');
+				}
 			}
+			item = item.join('');
 		}
-		item = item.join('');
-		return item;
+	}else{
+		item = 'You think you are smart, hm?';
 	}
+
+	return item;
+	
 }
 
 // generate for output
