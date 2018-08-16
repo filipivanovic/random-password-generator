@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Random Password Generator</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+<div id="wrapper">
+		<h1>random password generator</h1>
+		<h3>ugly version</h3>
+	<div id="container">
+		
+		<div id="inputs">
+			<input  id="passLength" type="range" min="6" max="30"><span id="passLenOutput"></span> <br>  length (min 6 / max 30) <br><br>
+				<input class="checkboxes" id="lowerLetters" type="checkbox" checked>lower letters <br>
+				<input class="checkboxes" id="upperLetters" type="checkbox" checked>upper letters <br>
+				<input class="checkboxes" id="numbers" type="checkbox">numbers <br>
+				<input class="checkboxes" id="specialCharacters" type="checkbox">special characters <br>
+				<input class="checkboxes" id="neighbour" type="checkbox" name="similar">replace adjacent if equal <br>
+				<div id="meaning">enter the word that will be surrounded with random characters. make sure that entered word have less characters then pass length</div>
+				<input class="checkboxes" id="easierToRemember" type="checkbox"><span id="q">easier to remember*</span>
+				<br><br><br>
+
+		</div>
+
+		<div id="buttons">
+			<button id="generate">generate</button>
+			<button id="default">default</button>
+			<button id="clear">clear</button>
+		</div>
+
+		<div id="result">
+			<div id="output"></div>
+		</div>
+		
+
+	</div>
+
+
+
+</div><!-- END OF WRAPPER -->
+
+
+
+
+
+<script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>
