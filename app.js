@@ -170,7 +170,7 @@ $('#clear').on('click', function(){
 
 
 $('#generate').on('click', function(){
-	$('#output').empty().append(generate(passLen, neighbour, easier, a()));
+	$('#output').empty().text(generate(passLen, neighbour, easier, a()));
 })
 
 
