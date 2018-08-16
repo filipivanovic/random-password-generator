@@ -154,7 +154,7 @@ $('#neighbour').on('change', function(){
 	neighbour = !neighbour
 })
 
-$('#passLength').on('input', function(){
+$('#passLength').on('input change', function(){
 	$('#passLenOutput').text($('#passLength').val());
 });
 
