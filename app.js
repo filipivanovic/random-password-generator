@@ -25,7 +25,7 @@ function defaultSetup(){
 	$('#output').empty();
 }
 defaultSetup();
-$('#default').on('click', defaultSetup)
+
 
 
 const checkboxes = $('.checkboxes:not(#neighbour, #easierToRemember)');
