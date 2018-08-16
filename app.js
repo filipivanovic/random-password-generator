@@ -179,22 +179,12 @@ $('#clear').on('click', function(){
 
 
 $('#generate').on('click', function(){
-	let count = 0;
-	for(let i of checkboxes){
-		if($(i).prop('checked') === false) {
-			count++;
-			if(count === 4){
-				$('#output').text('Why would you do that?')
-			}else{
-				$('#output').empty().text(generate(passLen, neighbour, easier, a()));
-			}
-		}
+	$('#output').empty().text(generate(passLen, neighbour, easier, a()));
+	if($('#output').text() == ''){
+		$('#output').text('why would you do that?')
 	}
-	if (/Mobi/.test(navigator.userAgent)) {
-   		$('#output').empty().text(generate(passLen, neighbour, easier, a()));
-	}
-	
 });
+
 
 
 
