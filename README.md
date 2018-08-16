@@ -1,2 +1,3 @@
 # random-password-generator
-random password generator with few options
+ugly designed random password generator with several options to make strong password (or weak, or anything...)
+
