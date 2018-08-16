@@ -190,6 +190,9 @@ $('#generate').on('click', function(){
 			}
 		}
 	}
+	if (/Mobi/.test(navigator.userAgent)) {
+   		$('#output').empty().text(generate(passLen, neighbour, easier, a()));
+	}
 	
 });
 
