@@ -159,7 +159,7 @@ $('#passLength').on('change', function(){
 });
 
 let passLen = $('#passLength').val();
-$("#passLength").on("change", function(){
+$("#passLength").on("mousemove", function(){
     passLen = $(this).val()
 
 })
