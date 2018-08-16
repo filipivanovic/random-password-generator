@@ -2,12 +2,14 @@ $(document).ready(function(){
 
 
 
+
 // all characters 
 const lettersLower = 'abcdefghijklmnopqrstuvwxyz';
 const lettersUpper = lettersLower.toUpperCase();
 const numbers = '1234567890';
 const specialChars = ' !"#$%&\'()*+,-.:;/@[\\]^_`{|}~?>=';
 // character "<" removed from list because it causes the bug for some reaseon(?)
+
 
 
 // put items in checkbox values //default values     
@@ -25,6 +27,7 @@ function defaultSetup(){
 	$('#output').empty();
 }
 defaultSetup();
+$('#default').on('click', defaultSetup);
 
 
 
@@ -46,7 +49,7 @@ let easier;
 function easy(){
 
 	if($('#easierToRemember').prop('checked')){
-		$('#q').after('<input id="easy" type="text">');
+		$('#q').after('<input id="easy" type="text" maxlength="29">');
 		$('#meaning').css('display', 'block');
 		easier = true;
 
@@ -139,6 +142,7 @@ function generate(passLen, neighbour, easier, itemArr){
 			arr.push(getRand(everyItem, itemArr[i]));
 		}
 
+
 		arr = arr.join('');
 		arr = getRand(arr.length, arr)
 
@@ -146,7 +150,7 @@ function generate(passLen, neighbour, easier, itemArr){
 
 		if(easier === true) arr = easierToRemember(arr, $('#easy').val());
 
-		while(arr.length < passLen) {
+		while(arr.length < passLen && arr.length != 0) {
 			generate(passLen, neighbour, easier, itemArr);
 		}
 
@@ -158,26 +162,38 @@ function generate(passLen, neighbour, easier, itemArr){
 let neighbour = $('#neighbour').prop('checked');
 $('#neighbour').on('change', function(){
 	neighbour = !neighbour
-})
+});
 
-$('#passLength').on('input change', function(){
+$('#passLength').on('input', function(){
 	$('#passLenOutput').text($('#passLength').val());
 });
 
-let passLen = $('#passLength').val();
+let passLen = 	$('#passLength').val();
 $("#passLength").on("change", function(){
     passLen = $(this).val()
-
-})
+});
 
 $('#clear').on('click', function(){
 	$('#output').empty();
-})
+});
 
 
 $('#generate').on('click', function(){
-	$('#output').empty().text(generate(passLen, neighbour, easier, a()));
-})
+	if(checkboxes.prop('checked') === false){
+		$('#output').text('Why would you do that?')
+	}else{
+		$('#output').empty().text(generate(passLen, neighbour, easier, a()));
+	}
+	
+});
+
+
+
+
+
+
+
+
 
 
 
