@@ -23,7 +23,7 @@
 #buttons {
 	margin: 0 auto;
 	text-align: center;
-	margin-top: 50px;
+	margin-top: 10px;
 }
 
 #buttons button {
@@ -117,8 +117,6 @@ h1 {
   		border-radius: 0;
   	}
 	
-	#buttons {
-		margin-top: 10px;
-	}
+	
 
 }
