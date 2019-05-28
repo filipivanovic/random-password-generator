@@ -13,7 +13,7 @@ const specialChars = ' !"#$%&\'()*+,-.:;/@[\\]^_`{|}~?>=';
 
 
 // put items in checkbox values //default values     
-function defaultSetup(){
+(function defaultSetup(){
 	$('#lowerLetters').val(lettersLower).prop('checked', true);
 	$('#upperLetters').val(lettersUpper).prop('checked', true);
 	$('#numbers').val(numbers).prop('checked', true);
@@ -25,9 +25,8 @@ function defaultSetup(){
 	$('#meaning').css('display', 'none');
 	$('#passLenOutput').text($('#passLength').val());
 	$('#output').empty();
-}
-defaultSetup();
-$('#default').on('click', defaultSetup);
+})();
+
 
 
 
@@ -51,16 +50,18 @@ function easy(){
 	if($('#easierToRemember').prop('checked')){
 		$('#q').after('<input id="easy" type="text" maxlength="29">');
 		$('#meaning').css('display', 'block');
+		$('#buttons').css('margin-top', '0px')
 		easier = true;
 
 	}else{
 		$('#easy').remove();
 		$('#meaning').css('display', 'none');
+		$('#buttons').css('margin-top', '50px')
 		easier = false;
 	}
 
 }
-easy()
+easy();
 $('#easierToRemember').on('change', easy);
 
 
@@ -72,7 +73,7 @@ function getRand(len, items){
 	for(let i = 0; i < len; i++){
 		let temp = Math.floor(Math.random() * item.length);
 		rand.push(item[temp]);
-		item.splice(temp, 1); // prevent repeating
+		item.splice(temp, 1); // prevent repeating letters
 	}
 
 	if(len > item.length){
@@ -184,13 +185,6 @@ $('#generate').on('click', function(){
 		$('#output').text('why would you do that?')
 	}
 });
-
-
-
-
-
-
-
 
 
 
