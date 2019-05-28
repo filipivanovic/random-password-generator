@@ -50,13 +50,11 @@ function easy(){
 	if($('#easierToRemember').prop('checked')){
 		$('#q').after('<input id="easy" type="text" maxlength="29">');
 		$('#meaning').css('display', 'block');
-		$('#buttons').css('margin-top', '0px')
 		easier = true;
 
 	}else{
 		$('#easy').remove();
 		$('#meaning').css('display', 'none');
-		$('#buttons').css('margin-top', '50px')
 		easier = false;
 	}
 
