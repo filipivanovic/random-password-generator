@@ -4,7 +4,8 @@
 	<title>Random Password Generator</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHv1Jws1rvfMyzdXsquMtpQ10YRPajpHoR_nG_NKnFUreHMC_i">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -16,24 +17,32 @@
 	<div id="container">
 		
 		<div id="inputs">
-			<input  id="passLength" type="range" min="6" max="30"><span id="passLenOutput"></span> <br>  length (min 6 / max 30) <br><br>
+
+				<div id="len">	
+						<input  id="passLength" type="range" min="6" max="30"><span id="passLenOutput"></span><br>  length (min 6 / max 30)
+				</div>
+
+			 <br><br>
 				<input class="checkboxes" id="lowerLetters" type="checkbox" checked>lower letters <br>
 				<input class="checkboxes" id="upperLetters" type="checkbox" checked>upper letters <br>
 				<input class="checkboxes" id="numbers" type="checkbox">numbers <br>
 				<input class="checkboxes" id="specialCharacters" type="checkbox">special characters <br>
-				<input class="checkboxes" id="neighbour" type="checkbox" name="similar">replace adjacent if equal <br>
-				<div id="meaning">enter the word that will be surrounded with random characters. make sure that entered word have less characters then pass length</div>
-				<input class="checkboxes" id="easierToRemember" type="checkbox"><span id="q">easier to remember*</span>
+				<input class="checkboxes" id="noRepeat" type="checkbox">no repeat<br>
+				<input class="checkboxes" id="easierToRemember" type="checkbox" ><span id="q">easier to remember*</span>
+				<div id="meaning">enter the word that will be wrapped with random characters. make sure that entered word have less characters then pass length</div>
+				
 
 		</div>
 
 		<div id="buttons">
 			<button id="generate">generate</button>
 			<button id="clear">clear</button>
+			<button id="copy">copy</button>
+
 		</div>
 
 		<div id="result">
-			<div id="output"></div>
+			<input id="output" type="text" readonly>
 		</div>
 		
 
