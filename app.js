@@ -8,7 +8,6 @@ const lettersLower = 'abcdefghijklmnopqrstuvwxyz';
 const lettersUpper = lettersLower.toUpperCase();
 const numbers = '1234567890';
 const specialChars = ' !"#$%&\'()*+,-.:;/@[\\]^_`{|}~?>=';
-// character "<" removed from list because it causes the bug for some reaseon(?)
 
 
 
@@ -19,29 +18,26 @@ const specialChars = ' !"#$%&\'()*+,-.:;/@[\\]^_`{|}~?>=';
 	$('#numbers').val(numbers).prop('checked', true);
 	$('#specialCharacters').val(specialChars).prop('checked', false);
 	$('#easierToRemember').prop('checked', false);
-	$('#neighbour').prop('checked', false);
+	$('#noRepeat').prop('checked', true);
 	$('#passLength').val(12);
-	$('#easy').remove();
-	$('#meaning').css('display', 'none');
 	$('#passLenOutput').text($('#passLength').val());
-	$('#output').empty();
+	$('#output').val('');
 })();
 
 
-
-
-const checkboxes = $('.checkboxes:not(#neighbour, #easierToRemember)');
+const checkboxes = $('.checkboxes:not(#noRepeat, #easierToRemember)');
 //make array of characters (checked values)
 let a = function(){
 	let charsInput = [];
-	$('.checkboxes:not(#neighbour, #easierToRemember):checked').each(function() {
+	$('.checkboxes:not(#noRepeat, #easierToRemember):checked').each(function() {
 		charsInput.push($(this).val());
 	});
-
 	return charsInput;
 }
 a();
 checkboxes.on('change', a)
+
+
 
 
 let easier;
@@ -59,133 +55,103 @@ function easy(){
 	}
 
 }
-easy();
 $('#easierToRemember').on('change', easy);
 
 
-//get random with custom word and length
-function getRand(len, items){
+
+function getRand(len, items, noRepeat){
 	let rand = [];
 	let item = Array.from(items);
-	
+	let itemLen = item.length;
+
 	for(let i = 0; i < len; i++){
-		let temp = Math.floor(Math.random() * item.length);
-		rand.push(item[temp]);
-		item.splice(temp, 1); // prevent repeating letters
-	}
-
-	if(len > item.length){
-		let lenDiff = len - items.length;
-		rand.push(getRand(lenDiff, items))
-	}
-
-	rand = rand.join('');
-	return rand;
-}
-
-//replace adjacent if equal
-function neighbourLetter(item){
-	let neigh = [];
-	for(let i = 0; i < item.length; i++){
-		neigh.push(item[i])
-		while(neigh[i] == neigh[i - 1] || neigh[i] == neigh[i + 1]){
-			neigh.pop();
-			neigh.push(getRand(1, item))
+		let randIndex = Math.floor(Math.random() * item.length);
+		rand.push(item[randIndex])
+		
+		if(noRepeat){
+			if(len < itemLen){
+				item.splice(randIndex, 1);
+			}
 		}
 	}
-	neigh = neigh.join('')
-	return neigh;
+	return rand.join('');
 }
+
 
 //put custom letters that will be wrapped with random chars
-function easierToRemember(item, itemToPut){
-	if(item.length > itemToPut.length){
-			if(itemToPut != undefined){
-			itemToPut = Array.from(itemToPut);
-			item = getRand(item.length, item) // randomize
-			item = Array.from(item);
-
-			let start = Math.floor((item.length - itemToPut.length) / 2);
-			let end = itemToPut.length;
-			item.splice(start, end, itemToPut);
-			for(let i in item){
-				if(item[i].constructor === Array){
-					item[i] = item[i].join('');
-				}
-			}
-			item = item.join('');
+function easierToRemember(item, itemToPut) {
+	let returnVal = Array.from(item);
+	
+	if(itemToPut != undefined) {
+		if(item.length > itemToPut.length) {
+			returnVal.splice(0, itemToPut.length);
+			let start = Math.floor(returnVal.length / 2);
+			returnVal.splice(start, 0, itemToPut);
+		}else {
+			return returnVal = 'You think you are smart, hm?';
 		}
-	}else{
-		item = 'You think you are smart, hm?';
-	}
 
-	return item;
+		return returnVal.join('');
+	}else {
+		return returnVal = 'Error';
+	}
+	
 	
 }
 
-// generate for output
-function generate(passLen, neighbour, easier, itemArr){
+
+function generate(passLen, noRepeat, easier, itemArr){
 		
-		let arr = [];
-		let everyItem = Math.floor(passLen / itemArr.length);
-
-		//get equal number of elements from each item from itemArr
-		let rest = passLen % itemArr.length;
-		if(rest > 0){
-			for(let i = 0; i < rest; i++){
-				arr.push(getRand(1, itemArr[Math.floor(Math.random() * (itemArr.length))]));
-			}
+	let returnVal = [];
+	let everyItem = Math.floor(passLen / itemArr.length);
+	//get equal number of elements from each item from picked values
+	let rest = passLen % itemArr.length;
+	if(rest > 0){
+		for(let i = 0; i < rest; i++){
+			let rand = Math.floor(Math.random() * itemArr[i].length);
+			returnVal.push(itemArr[i][rand])
 		}
 
-		for(let i = 0; i < itemArr.length; i++){
-			arr.push(getRand(everyItem, itemArr[i]));
-		}
+	}
 
+	itemArr.map( item => returnVal.push(getRand(everyItem, item, noRepeat)));
 
-		arr = arr.join('');
-		arr = getRand(arr.length, arr)
+	returnVal = returnVal.join('');
 
-		if(neighbour === true) arr = neighbourLetter(arr);
+	returnVal = getRand(returnVal.length - 1, returnVal, noRepeat);
 
-		if(easier === true) arr = easierToRemember(arr, $('#easy').val());
+	if(easier) returnVal = easierToRemember(returnVal, $('#easy').val());
 
-		while(arr.length < passLen && arr.length != 0) {
-			generate(passLen, neighbour, easier, itemArr);
-		}
-
-	return arr;
-
+	return returnVal;
 }
 
 
-let neighbour = $('#neighbour').prop('checked');
-$('#neighbour').on('change', function(){
-	neighbour = !neighbour
-});
+function copyPass(){
+	let output = document.getElementById('output');
+	if(output.value !== '') {
+		output.select();
+		document.execCommand('Copy');
+		alert("Password copied to clipboard!");
+	}
+}
 
-$('#passLength').on('input', function(){
-	$('#passLenOutput').text($('#passLength').val());
-});
+$('#copy').on('click', copyPass);
+
+let noRepeat = $('#noRepeat').prop('checked');
+$('#noRepeat').on('change', () => noRepeat = !noRepeat);
+
+$('#passLength').on('input', () => $('#passLenOutput').text($('#passLength').val()));
 
 let passLen = 	$('#passLength').val();
-$("#passLength").on("change", function(){
-    passLen = $(this).val()
+$('#passLength').on('change', (e) => passLen = $(e.target).val());
+
+$('#clear').on('click', () => $('#output').val(''));
+
+
+$('#generate').on('click', () => {
+	$('#output').val(generate(passLen, noRepeat, easier, a()));;
+	$('#output').val() === '' && $('#output').val('why would you do that?');
 });
-
-$('#clear').on('click', function(){
-	$('#output').empty();
-});
-
-
-$('#generate').on('click', function(){
-	$('#output').empty().text(generate(passLen, neighbour, easier, a()));
-	if($('#output').text() == ''){
-		$('#output').text('why would you do that?')
-	}
-});
-
-
-
 
 
 });
