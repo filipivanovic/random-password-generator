@@ -23,6 +23,7 @@ const specialChars = ' !"#$%&\'()*+,-.:;/@[\\]^_`{|}~?>=';
 	$('#passLenOutput').text($('#passLength').val());
 	$('#output').val('');
 })();
+	duvaj ga
 
 
 const checkboxes = $('.checkboxes:not(#noRepeat, #easierToRemember)');
